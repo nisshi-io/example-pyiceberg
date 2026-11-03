@@ -21,7 +21,7 @@ services:
       timeout: 5s
   nisshi:
     image: ${NISSHI_IMAGE}
-    pull_policy: missing
+    pull_policy: always
     restart: unless-stopped
     environment:
       ADVERTISED_LISTENER_URL: ${ADVERTISED_LISTENER_URL}
