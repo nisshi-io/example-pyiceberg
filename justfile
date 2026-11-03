@@ -1,7 +1,7 @@
 set dotenv-load
 
-# teardown existing, start: minio, when ready create: tansu and lake buckets, and then: iceberg catalog and tansu
-up: docker-compose-down minio-up minio-ready-local minio-local-alias minio-tansu-bucket minio-lake-bucket iceberg-catalog-up tansu-up
+# teardown existing, start: minio, when ready create: nisshi and lake buckets, and then: iceberg catalog and nisshi
+up: docker-compose-down minio-up minio-ready-local minio-local-alias minio-nisshi-bucket minio-lake-bucket iceberg-catalog-up nisshi-up
 
 [private]
 docker-compose-up *args:
@@ -36,7 +36,7 @@ minio-mc +args: (docker-compose-exec "minio" "mc" args)
 minio-local-alias: (minio-mc "alias" "set" "local" "http://localhost:9000" "minioadmin" "minioadmin")
 
 [private]
-minio-tansu-bucket: (minio-mc "mb" "local/tansu")
+minio-nisshi-bucket: (minio-mc "mb" "local/nisshi")
 
 [private]
 minio-lake-bucket: (minio-mc "mb" "local/lake")
@@ -45,10 +45,10 @@ minio-lake-bucket: (minio-mc "mb" "local/lake")
 minio-ready-local: (minio-mc "ready" "local")
 
 [private]
-tansu-up: (docker-compose-up "tansu")
+nisshi-up: (docker-compose-up "nisshi")
 
 [private]
-tansu-down: (docker-compose-down "tansu")
+nisshi-down: (docker-compose-down "nisshi")
 
 [private]
 iceberg-catalog-up: (docker-compose-up "iceberg-catalog")
@@ -57,16 +57,16 @@ iceberg-catalog-up: (docker-compose-up "iceberg-catalog")
 iceberg-catalog-down: (docker-compose-down "iceberg-catalog")
 
 [private]
-topic-create topic: (docker-compose-exec "tansu" "/tansu" "topic" "create" topic)
+topic-create topic: (docker-compose-exec "nisshi" "/nisshi" "topic" "create" topic)
 
 [private]
-topic-delete topic: (docker-compose-exec "tansu" "/tansu" "topic" "delete" topic)
+topic-delete topic: (docker-compose-exec "nisshi" "/nisshi" "topic" "delete" topic)
 
 [private]
-cat-produce topic file: (docker-compose-exec "tansu" "/tansu" "cat" "produce" topic file)
+cat-produce topic file: (docker-compose-exec "nisshi" "/nisshi" "cat" "produce" topic file)
 
 [private]
-cat-consume topic: (docker-compose-exec "tansu" "/tansu" "cat" "consume" topic "--max-wait-time-ms=5000")
+cat-consume topic: (docker-compose-exec "nisshi" "/nisshi" "cat" "consume" topic "--max-wait-time-ms=5000")
 
 [private]
 iceberg-table-scan table:
@@ -85,7 +85,7 @@ employee-produce: (cat-produce "employee" "data/employees.json")
 employee-consume: (cat-consume "employee")
 
 # iceberg employee table scan
-employee-table-scan: (iceberg-table-scan "tansu.employee")
+employee-table-scan: (iceberg-table-scan "nisshi.employee")
 
 
 ## Person
@@ -100,7 +100,7 @@ person-produce: (cat-produce "person" "data/persons.json")
 person-consume: (cat-consume "person")
 
 # iceberg person table scan
-person-table-scan: (iceberg-table-scan "tansu.person")
+person-table-scan: (iceberg-table-scan "nisshi.person")
 
 
 ## Search
@@ -115,7 +115,7 @@ search-produce: (cat-produce "search" "data/searches.json")
 search-consume: (cat-consume "search")
 
 # iceberg search table scan
-search-table-scan: (iceberg-table-scan "tansu.search")
+search-table-scan: (iceberg-table-scan "nisshi.search")
 
 
 ## Observation
@@ -130,7 +130,7 @@ observation-produce: (cat-produce "observation" "data/observations.json")
 observation-consume: (cat-consume "observation")
 
 # iceberg observation table scan
-observation-table-scan: (iceberg-table-scan "tansu.observation")
+observation-table-scan: (iceberg-table-scan "nisshi.observation")
 
 
 ## Taxi
@@ -145,7 +145,7 @@ taxi-produce: (cat-produce "taxi" "data/trips.json")
 taxi-consume: (cat-consume "taxi")
 
 # iceberg taxi table scan
-taxi-table-scan: (iceberg-table-scan "tansu.taxi")
+taxi-table-scan: (iceberg-table-scan "nisshi.taxi")
 
 
 ## Grade
@@ -160,4 +160,4 @@ grade-produce: (cat-produce "grade" "data/grades.json")
 grade-consume: (cat-consume "grade")
 
 # iceberg grade table scan
-grade-table-scan: (iceberg-table-scan "tansu.grade")
+grade-table-scan: (iceberg-table-scan "nisshi.grade")

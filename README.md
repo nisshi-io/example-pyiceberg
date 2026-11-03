@@ -2,16 +2,16 @@
 This repository showcases examples of structured data published to schema-backed topics, instantly accessible as [Apache Iceberg tables](https://iceberg.apache.org).
 
 Prerequisites:
-- **[docker](https://www.docker.com)**, using [compose.yaml](compose.yaml) which runs [tansu](https://tansu.io), [MinIO](https://min.io) and an [Apache Iceberg REST Catalog](https://iceberg.apache.org/terms/#decoupling-using-the-rest-catalog)
+- **[docker](https://www.docker.com)**, using [compose.yaml](compose.yaml) which runs [Nisshi](https://nisshi.io), [MinIO](https://min.io) and an [Apache Iceberg REST Catalog](https://iceberg.apache.org/terms/#decoupling-using-the-rest-catalog)
 - **[just](https://github.com/casey/just)**, a handy way to save and run project-specific commands
 - **[uv](https://github.com/astral-sh/uv)**, an extremely fast Python package and project manager used to run the [pyiceberg](https://py.iceberg.apache.org) examples
 
-[justfile](./justfile) contains recipes to run [MinIO](https://min.io), create the buckets, and run the Apache Iceberg REST catalog with [Tansu](https://tansu.io).
+[justfile](./justfile) contains recipes to run [MinIO](https://min.io), create the buckets, and run the Apache Iceberg REST catalog with [Nisshi](https://nisshi.io).
 
 Once you have the prerequisites installed, clone this repository and start everything up with:
 
 ```shell
-git clone git@github.com:tansu-io/example-pyiceberg.git
+git clone https://github.com/nisshi-io/example-pyiceberg.git
 cd example-pyiceberg
 just up
 ```
@@ -28,11 +28,11 @@ mc: Initialized share uploads `/tmp/.mc/share/uploads.json` file.
 mc: Initialized share downloads `/tmp/.mc/share/downloads.json` file.
 The cluster 'local' is ready
 Added `local` successfully.
-Bucket created successfully `local/tansu`.
+Bucket created successfully `local/nisshi`.
 Bucket created successfully `local/lake`.
 ✔ Container example-pyiceberg-minio-1
 ✔ Container example-pyiceberg-iceberg-catalog-1
-✔ Container example-pyiceberg-tansu-1  Healthy
+✔ Container example-pyiceberg-nisshi-1  Healthy
 ```
 
 Done! You can now run the examples.
@@ -90,7 +90,7 @@ just employee-table-scan
 Giving the following output:
 
 ```text
-s3://lake/tansu/employee
+s3://lake/nisshi/employee
 table {
   1: id: optional int
   2: name: optional string
@@ -179,7 +179,7 @@ just grade-table-scan
 Giving the following output:
 
 ```text
-s3://lake/tansu/grade
+s3://lake/nisshi/grade
 table {
   1: key: optional string
   2: value: optional struct<3: final: optional double, 4: first: optional string, 5: grade: optional string, 6: last: optional string, 7: test1: optional double, 8: test2: optional double, 9: test3: optional double, 10: test4: optional double>
@@ -272,7 +272,7 @@ just observation-table-scan
 Giving the following output:
 
 ```text
-s3://lake/tansu/observation
+s3://lake/nisshi/observation
 table {
   1: key: optional string
   2: value: optional struct<3: amount: optional double, 4: unit: optional string>
@@ -360,7 +360,7 @@ just person-table-scan
 Giving the following output:
 
 ```text
-s3://lake/tansu/person
+s3://lake/nisshi/person
 table {
   1: key: optional string
   2: value: optional struct<3: age: optional long, 4: firstName: optional string, 5: lastName: optional string>
@@ -445,7 +445,7 @@ just search-table-scan
 Giving the following output:
 
 ```text
-s3://lake/tansu/search
+s3://lake/nisshi/search
 table {
   1: query: optional string
   2: page_number: optional int
@@ -523,7 +523,7 @@ just taxi-table-scan
 Giving the following output:
 
 ```text
-s3://lake/tansu/taxi
+s3://lake/nisshi/taxi
 table {
   1: vendor_id: optional long
   2: trip_id: optional long

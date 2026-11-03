@@ -16,8 +16,8 @@ services:
       retries: 1
       start_period: 5s
       timeout: 5s
-  tansu:
-    image: ${TANSU_IMAGE}
+  nisshi:
+    image: ${NISSHI_IMAGE}
     pull_policy: missing
     restart: unless-stopped
     environment:
@@ -39,7 +39,6 @@ services:
       - ./data/:/data/
     ports:
       - 9092:9092
-      - 9100:9100
   iceberg-catalog:
     image: apache/iceberg-rest-fixture
     environment:
